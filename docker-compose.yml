@@ -1,0 +1,17 @@
+services:
+  app:
+    # GHCR에 푸시된 최신 이미지를 사용합니다.
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/watchtower-app:latest
+    ports:
+      - "8080:8080"
+    restart: always
+
+  watchtower:
+    # 컨테이너 업데이트를 자동화하는 서비스입니다.
+    image: containrrr/watchtower
+    volumes:
+      # 호스트의 도커 소켓을 공유하여 컨테이너를 제어합니다.
+      - /var/run/docker.sock:/var/run/docker.sock
+    # --interval: 업데이트 확인 주기, --cleanup: 업데이트 후 이전 이미지 삭제
+    command: --interval ${WATCHTOWER_INTERVAL:-30} --cleanup
+    restart: always
