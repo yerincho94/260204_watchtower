@@ -15,3 +15,5 @@ services:
     # --interval: 업데이트 확인 주기, --cleanup: 업데이트 후 이전 이미지 삭제
     command: --interval ${WATCHTOWER_INTERVAL:-30} --cleanup
     restart: always
+    environment:
+      - DOCKER_API_VERSION=1.44
